@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
@@ -8,12 +8,23 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const loginHandler = (email, password) => {
+    localStorage.setItem("connected", "true");
     setIsLoggedIn(true);
   };
 
   const logoutHandler = () => {
+    localStorage.removeItem("connected");
     setIsLoggedIn(false);
   };
+  // console.log("before");
+  useEffect(() => {
+    // console.log("effect");
+    const item = localStorage.getItem("connected");
+    if (item === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+  // console.log("after");
 
   return (
     <React.Fragment>
